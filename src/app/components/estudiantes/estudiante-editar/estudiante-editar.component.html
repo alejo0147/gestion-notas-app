@@ -1,0 +1,19 @@
+<h2>Editar Estudiante</h2>
+
+<form [formGroup]="estudianteForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="nombre">Nombre del estudiante</label>
+    <input
+      type="text"
+      id="nombre"
+      class="form-control"
+      formControlName="nombre"
+      required
+    />
+  </div>
+
+  <button type="submit" class="btn btn-outline-success my-0 mt-3" [disabled]="!estudianteForm.valid">
+    Guardar Cambios
+  </button>
+</form>
+

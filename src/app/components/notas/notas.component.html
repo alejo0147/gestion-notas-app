@@ -1,0 +1,48 @@
+<button class="btn btn-outline-success my-0" [routerLink]="['/notas/nuevo']">
+  Crear Nota
+</button>
+
+<h3>Notas</h3>
+
+@if (notas.length == 0) {
+  <div class="alert alert-warnihng my-4">No hay registros en el sistema!</div>
+} @else {
+<table class="table table-hover table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Estudiante</th>
+      <th>Profesor</th>
+      <th class="text-center">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let nota of notas">
+      <td>{{ nota.id }}</td>
+      <td>{{ nota.nombre }}</td>
+      <td>{{ nota.estudianteNombre }}</td>
+      <td>{{ nota.profesorNombre }}</td>
+      <td>
+        <button
+        *ngIf="nota.id"
+          class="btn btn-outline-warning my-0"
+          (click)="editNota(nota.id)"
+        >
+          Editar
+        </button>
+      </td>
+      <td>
+        <button
+        *ngIf="nota.id"
+          class="btn btn-outline-danger my-0"
+          (click)="deleteNota(nota.id)"
+        >
+          Eliminar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+}
+

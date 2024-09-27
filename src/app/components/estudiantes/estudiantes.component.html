@@ -1,0 +1,46 @@
+<button
+  class="btn btn-outline-success my-0"
+  [routerLink]="['/estudiantes/nuevo']"
+>
+  Crear Estudiante
+</button>
+
+<h3>Estudiantes</h3>
+
+@if (estudiantes.length == 0) {
+  <div class="alert alert-warnihng my-4">No hay registros en el sistema!</div>
+} @else {
+<table class="table table-hover table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th class="text-center">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let estudiante of estudiantes">
+      <td>{{ estudiante.id }}</td>
+      <td>{{ estudiante.nombre }}</td>
+      <td>
+        <button
+        *ngIf="estudiante.id"
+          class="btn btn-outline-warning my-0"
+          (click)="editEstudiante(estudiante.id)"
+        >
+          Editar
+        </button>
+      </td>
+      <td>
+        <button
+        *ngIf="estudiante.id"
+          class="btn btn-outline-danger my-0"
+          (click)="deleteEstudiante(estudiante.id)"
+        >
+          Eliminar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+}
