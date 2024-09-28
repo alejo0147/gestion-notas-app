@@ -10,6 +10,7 @@ import { NotasService } from '../../../services/notas.service';
 import { EstudiantesService } from '../../../services/estudiantes.service';
 import { ProfesoresService } from '../../../services/profesores.service';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-nota-editar',
@@ -83,16 +84,41 @@ export class NotaEditarComponent {
 
         this.notasService.updateNota(this.notaId, formValue).subscribe({
           next: () => {
-            console.log('Nota actualizada exitosamente');
+            Swal.fire({
+              title: 'Actualizado',
+              text: 'La nota ha sido actualizada exitosamente.',
+              icon: 'success',
+              timer: 3000,
+              showConfirmButton: false 
+            });
             this.router.navigate(['/notas']);
           },
           error: (err) => {
             console.error('Error al actualizar la nota:', err);
+            Swal.fire({
+              title: 'Error',
+              text: 'Hubo un problema al actualizar la nota.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
           },
         });
       } else {
         console.error('ID de nota no encontrado en la URL');
+        Swal.fire({
+          title: 'Error',
+          text: 'No se encontró el ID de la nota.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
+    } else {
+      Swal.fire({
+        title: 'Error',
+        text: 'El formulario no es válido. Por favor revisa los datos.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
 

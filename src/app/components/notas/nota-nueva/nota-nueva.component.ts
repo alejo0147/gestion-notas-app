@@ -13,6 +13,7 @@ import { NotasService } from '../../../services/notas.service';
 import { Router } from '@angular/router';
 import { Nota } from '../../../models/nota';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-nota-nueva',
@@ -21,7 +22,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './nota-nueva.component.html',
   styleUrl: './nota-nueva.component.css',
 })
-export class NotaNuevaComponent implements OnInit{
+export class NotaNuevaComponent implements OnInit {
   notaForm: FormGroup;
   estudiantes: Estudiante[] = [];
   profesores: Profesor[] = [];
@@ -70,13 +71,40 @@ export class NotaNuevaComponent implements OnInit{
 
       this.notasService.createNota(nuevaNota).subscribe(
         () => {
-          this.router.navigate(['/notas']);
-          this.notasService.getAllNotas().subscribe((notas) => this.notas = notas );
+          Swal.fire({
+            title: '¡Nota creada!',
+            text: 'La nota ha sido registrada exitosamente.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            timer: 3000,
+            timerProgressBar: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          }).then(() => {
+            this.router.navigate(['/notas']);
+            this.notasService
+              .getAllNotas()
+              .subscribe((notas) => (this.notas = notas));
+          });
         },
         (error) => {
-          console.error('Error al crear la nota', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Ocurrió un error al crear la nota.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+          });
+          console.log('Error al crear la nota', error);
         }
       );
+    } else {
+      // Alerta de validación
+      Swal.fire({
+        title: 'Formulario inválido',
+        text: 'Por favor, complete todos los campos requeridos.',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar',
+      });
     }
   }
 }

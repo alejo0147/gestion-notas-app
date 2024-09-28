@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EstudiantesService } from '../../../services/estudiantes.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-estudiante-editar',
@@ -40,20 +41,35 @@ export class EstudianteEditarComponent implements OnInit {
     if (this.estudianteForm.valid) {
       const formValue = this.estudianteForm.value;
 
-      console.log('Formulario a enviar:', formValue);
-
       this.estudiantesService.updateEstudiante(this.estudianteId, formValue).subscribe({
         next: () => {
-          console.log('Estudiante actualizado exitosamente');
+          Swal.fire({
+            title: 'Actualizado',
+            text: 'El estudiante ha sido actualizado exitosamente.',
+            icon: 'success',
+            timer: 3000,
+            showConfirmButton: false
+          });
           this.router.navigate(['/estudiantes']);
         },
         error: (err) => {
-          console.error('Error al actualizar el estudiante:', err);
-        },
+          Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al actualizar el estudiante.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+        }
       });
     } else {
-      console.error('Formulario no válido');
+      Swal.fire({
+        title: 'Error',
+        text: 'Formulario no válido, por favor revisa los datos.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
+
 
 }

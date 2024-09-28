@@ -1,25 +1,27 @@
-<button class="btn btn-outline-success my-0" [routerLink]="['/notas/nuevo']">
+<button class="btn btn-outline-success my-0 mb-4"
+  [routerLink]="['/notas/nuevo']"
+>
   Crear Nota
 </button>
 
-<h3>Notas</h3>
+<h3>{{ title }}</h3>
 
 @if (notas.length == 0) {
-  <div class="alert alert-warnihng my-4">No hay registros en el sistema!</div>
+  <div class="alert alert-warning my-4 fw-bold">No hay registros en el sistema!</div>
 } @else {
 <table class="table table-hover table-striped">
   <thead>
     <tr>
-      <th>ID</th>
+      <th>Nota</th>
       <th>Nombre</th>
       <th>Estudiante</th>
       <th>Profesor</th>
-      <th class="text-center">Acciones</th>
+      <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let nota of notas">
-      <td>{{ nota.id }}</td>
+      <td>{{ nota.valor }}</td>
       <td>{{ nota.nombre }}</td>
       <td>{{ nota.estudianteNombre }}</td>
       <td>{{ nota.profesorNombre }}</td>
